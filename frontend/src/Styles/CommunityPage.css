@@ -1,0 +1,170 @@
+/* Chat Container with Glass Effect */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 980px;
+  margin: 20px auto;
+  height: 90vh;
+  border-radius: var(--border-radius);
+  background: rgba(49, 62, 69, 0.126) ;/* Slightly transparent background */
+  backdrop-filter: blur(15px); /* Glass blur effect */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, 
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+/* Chat Title with Gradient */
+.chat-title {
+  text-align: center;
+  padding: 15px;
+  color: yellowgreen;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Message Box */
+.message-box {
+  background-color: transparent;
+  flex: 1;
+  padding: 15px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+/* Scrollbar Styling */
+.message-box::-webkit-scrollbar {
+  width: 6px;
+}
+.message-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+.message-box::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+}
+
+/* No Messages Placeholder */
+.no-messages {
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Message Common Styles */
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: var(--border-radius);
+  margin: 5px 0;
+  word-wrap: break-word;
+  position: relative;
+  clear: both;
+}
+
+/* Username for Received Messages */
+.message-username {
+  font-size: 0.8em;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+/* Sent Message (Right) */
+.sent-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.sent {
+  background-color: var(--primary-color);
+  color: white;
+  align-self: flex-end;
+}
+
+/* Received Message (Left) */
+.received-wrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+.received {
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  align-self: flex-start;
+}
+
+/* Message Timestamp */
+.message-time {
+  font-size: 0.7em;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* Input Container */
+.input-container {
+  display: flex;
+  padding: 12px;
+  background-color: rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Message Input */
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--border-radius);
+  outline: none;
+  resize: none;
+  max-height: 100px;
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  transition: var(--transition);
+}
+.message-input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
+}
+
+/* Send Button */
+.send-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+.send-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+.send-button:disabled {
+  background-color: rgba(46, 125, 50, 0.5);
+  cursor: not-allowed;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  .chat-container {
+    width: 95%;
+    margin: 10px auto;
+    height: 90vh;
+  }
+  
+  .message {
+    max-width: 80%;
+  }
+}

@@ -1,0 +1,55 @@
+# ───── Logs ─────
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ───── Dependencies ─────
+backend/node_modules/
+frontend/node_modules/
+
+# ───── Build outputs ─────
+backend/dist/
+frontend/dist/
+dist/
+build/
+.cache/
+.next/
+out/
+
+# ───── Environment files ─────
+backend/.env
+frontend/.env
+.env
+.env.*.local
+
+# ───── Testing / Coverage ─────
+coverage/
+.nyc_output/
+*.lcov
+
+# ───── Editor / IDE ─────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ───── OS junk ─────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# ───── Misc ─────
+*.tgz
+*.bak
+*.tmp
+*.lock

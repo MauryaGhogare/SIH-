@@ -1,0 +1,96 @@
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLeaf, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
+import { useLanguage } from "../stores/useLanguage";
+
+const translations = {
+  Eng: {
+    appName: "360° Agri",
+    navLinks: {
+      home: "Home",
+      marketplace: "Marketplace",
+      community: "Community",
+      weatherIrrigation: "Weather & Irrigation",
+      pestDiseaseScan: "Pest & Disease Scan",
+      governmentSchemes: "Government Schemes"
+    }
+  },
+  Mar: {
+    appName: "३६०° शेती",
+    navLinks: {
+      home: "मुख्यपृष्ठ",
+      marketplace: "बाजारपेठ",
+      community: "समुदाय",
+      weatherIrrigation: "हवामान आणि सिंचन",
+      pestDiseaseScan: "किडा आणि रोग स्कॅन",
+      governmentSchemes: "सरकारी योजना"
+    }
+  }
+};
+
+export const Navbar = () => {
+  const { language, setLanguage } = useLanguage();
+  
+  const t = translations[language] || translations.Eng;
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="nav-left">
+        <Link to={"/"} className="logo">
+          <FontAwesomeIcon icon={faLeaf} />
+          <span>{t.appName}</span>
+        </Link>
+      </div>
+      <div className="nav-center">
+        <ul className="nav-links">
+          <li>
+            <Link to="/" className="Home">
+              {t.navLinks.home}
+            </Link>
+          </li>
+          <li>
+            <Link to="/marketplace" className="Marketplace">
+              {t.navLinks.marketplace}
+            </Link>
+          </li>
+          <li>
+            <Link to="/community" className="Community">
+              {t.navLinks.community}
+            </Link>
+          </li>
+          <li>
+            <Link to="/weather" className="Weather-Irrigation">
+              {t.navLinks.weatherIrrigation}
+            </Link>
+          </li>
+          <li>
+            <Link to="/pest-scan" className="Pest-Disease-Scan">
+              {t.navLinks.pestDiseaseScan}
+            </Link>
+          </li>
+          <li>
+            <Link to="/schemes" className="Government-Schemes">
+              {t.navLinks.governmentSchemes}
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className="nav-right">
+        <div className="language-selector">
+          <select value={language} onChange={handleLanguageChange}>
+            <option value="Eng">English</option>
+            <option value="Mar">मराठी</option>
+          </select>
+        </div>
+        <Link to={"/profile"} className="user-profile">
+          <FontAwesomeIcon icon={faUserCircle} />
+        </Link>
+      </div>
+    </nav>
+  );
+};
