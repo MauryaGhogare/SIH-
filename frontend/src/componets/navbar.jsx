@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLeaf, faUserCircle, faShoppingCart, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
+import { useLanguage } from "../stores/useLanguage";
+import { useCartStore } from "../stores/useCartStore";
+
+const translations = {
+  Eng: {
+    appName: "360° Agri",
+    navLinks: {
+      home: "Home",
+      marketplace: "Marketplace",
+      community: "Community",
+      weatherIrrigation: "Weather & Irrigation",
+      pestDiseaseScan: "Pest & Disease Scan",
+      governmentSchemes: "Government Schemes"
+    }
+  },
+  Mar: {
+    appName: "३६०° शेती",
+    navLinks: {
+      home: "मुख्यपृष्ठ",
+      marketplace: "बाजारपेठ",
+      community: "समुदाय",
+      weatherIrrigation: "हवामान आणि सिंचन",
+      pestDiseaseScan: "किडा आणि रोग स्कॅन",
+      governmentSchemes: "सरकारी योजना"
+    }
+  }
+};
+
+export const Navbar = () => {
+  const { language, setLanguage } = useLanguage();
+  const { getItemCount } = useCartStore();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
+  const t = translations[language] || translations.Eng;
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="nav-left">
+        <Link to={"/"} className="logo">
+          <FontAwesomeIcon icon={faLeaf} />
+          <span>{t.appName}</span>
+        </Link>
+      </div>
+      <div className="nav-center">
+        <ul className="nav-links">
+          <li>
+            <Link to="/" className="Home">
+              {t.navLinks.home}
+            </Link>
+          </li>
+          <li>
+            <Link to="/marketplace" className="Marketplace">
+              {t.navLinks.marketplace}
+            </Link>
+          </li>
+          <li>
+            <Link to="/community" className="Community">
+              {t.navLinks.community}
+            </Link>
+          </li>
+          <li>
+            <Link to="/weather" className="Weather-Irrigation">
+              {t.navLinks.weatherIrrigation}
+            </Link>
+          </li>
+          <li>
+            <Link to="/pest-scan" className="Pest-Disease-Scan">
+              {t.navLinks.pestDiseaseScan}
+            </Link>
+          </li>
+          <li>
+            <Link to="/schemes" className="Government-Schemes">
+              {t.navLinks.governmentSchemes}
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className="nav-right">
+        <div className="language-selector">
+          <select value={language} onChange={handleLanguageChange}>
+            <option value="Eng">English</option>
+            <option value="Mar">मराठी</option>
+          </select>
+        </div>
+        <Link to={"/cart"} className="cart-link" style={{ position: 'relative' }}>
+          <FontAwesomeIcon icon={faShoppingCart} />
+          <span className="cart-count">{getItemCount()}</span>
+        </Link>
+        <div className="profile-dropdown" onMouseLeave={() => setShowProfileMenu(false)}>
+          <button className="user-profile" onClick={() => setShowProfileMenu(v => !v)}>
+            <FontAwesomeIcon icon={faUserCircle} />
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 6, fontSize: 12 }} />
+          </button>
+          {showProfileMenu && (
+            <div className="profile-menu">
+              <Link to="/profile">Profile</Link>
+              <Link to="/orders">Orders</Link>
+              <Link to="/logout">Logout</Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
