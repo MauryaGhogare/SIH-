@@ -15,6 +15,7 @@ import LoginPage from "./Pages/LoginPage.jsx";
 import ProfilePage from "./Pages/ProfilePage.jsx";
 import { MarketplacePage } from "./Pages/MarketplacePage.jsx";
 import { CommunityPage } from "./Pages/CommunityPage.jsx";
+import CartPage from "./Pages/CartPage.jsx";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore();
@@ -52,18 +53,13 @@ function App() {
           element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
         />
 
-        <Route
-          path="/marketplace"
-          element={authUser ? <MarketplacePage /> : <Navigate to="/login" />}
-        />
+        <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route
           path="/community"
           element={authUser ? <CommunityPage /> : <Navigate to="/login" />}
         />
-        <Route
-          path="/marketplace"
-          element={authUser ? <MarketplacePage /> : <Navigate to="/login" />}
-        />
+        {/* removed duplicate marketplace route */}
 
         <Route path="/update" element={<ProfilePage />} />
       </Routes>

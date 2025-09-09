@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeaf, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faLeaf, faUserCircle, faShoppingCart, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import { useLanguage } from "../stores/useLanguage";
+import { useCartStore } from "../stores/useCartStore";
 
 const translations = {
   Eng: {
@@ -31,6 +32,8 @@ const translations = {
 
 export const Navbar = () => {
   const { language, setLanguage } = useLanguage();
+  const { getItemCount } = useCartStore();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   
   const t = translations[language] || translations.Eng;
 
@@ -87,9 +90,23 @@ export const Navbar = () => {
             <option value="Mar">मराठी</option>
           </select>
         </div>
-        <Link to={"/profile"} className="user-profile">
-          <FontAwesomeIcon icon={faUserCircle} />
+        <Link to={"/cart"} className="cart-link" style={{ position: 'relative' }}>
+          <FontAwesomeIcon icon={faShoppingCart} />
+          <span className="cart-count">{getItemCount()}</span>
         </Link>
+        <div className="profile-dropdown" onMouseLeave={() => setShowProfileMenu(false)}>
+          <button className="user-profile" onClick={() => setShowProfileMenu(v => !v)}>
+            <FontAwesomeIcon icon={faUserCircle} />
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 6, fontSize: 12 }} />
+          </button>
+          {showProfileMenu && (
+            <div className="profile-menu">
+              <Link to="/profile">Profile</Link>
+              <Link to="/orders">Orders</Link>
+              <Link to="/logout">Logout</Link>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

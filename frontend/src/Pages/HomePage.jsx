@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Homepage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -256,6 +257,7 @@ const fetchWeatherData = async (
 };
 
 const Homepage = ({ authUser }) => {
+  const navigate = useNavigate();
   const { language } = useLanguage();
   const t = translations[language] || translations.Eng;
 
@@ -556,7 +558,19 @@ const Homepage = ({ authUser }) => {
               </div>
               <h3>{feature.title}</h3>
               <p>{feature.description}</p>
-              <button className="cta-button">{feature.ctaText}</button>
+              <button
+                className="cta-button"
+                onClick={() => {
+                  if (
+                    feature.title === "Farmer-to-Consumer Marketplace" ||
+                    feature.title === "शेतकरी ते ग्राहक बाजारपेठ"
+                  ) {
+                    navigate("/marketplace");
+                  }
+                }}
+              >
+                {feature.ctaText}
+              </button>
             </div>
           ))}
         </div>
