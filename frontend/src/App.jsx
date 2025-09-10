@@ -16,6 +16,7 @@ import ProfilePage from "./Pages/ProfilePage.jsx";
 import { MarketplacePage } from "./Pages/MarketplacePage.jsx";
 import { CommunityPage } from "./Pages/CommunityPage.jsx";
 import CartPage from "./Pages/CartPage.jsx";
+import { DashboardPage } from "./Pages/DashboardPage.jsx";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore();
@@ -54,6 +55,7 @@ function App() {
         />
 
         <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route
           path="/community"

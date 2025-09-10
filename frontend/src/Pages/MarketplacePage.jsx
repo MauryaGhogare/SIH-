@@ -24,421 +24,226 @@ import {
 import '../Styles/MarketplacePage.css'
 import { useCartStore } from '../stores/useCartStore'
 import { faThLarge, faList } from '@fortawesome/free-solid-svg-icons'
+import BidForm from '../components/BidForm'
+import biddingService from '../services/biddingService'
 
-// Mock data for products
-const mockProducts = [
+// Mock data for farmers
+const mockFarmers = [
   {
     id: 1,
-    name: "Fresh Organic Tomatoes",
-    farmer: "Rajesh Kumar",
+    name: "Rajesh Kumar",
+    mainCrop: "Organic Tomatoes",
+    farmName: "Green Valley Organic Farm",
     location: "Punjab, India",
-    price: 45,
-    originalPrice: 60,
+    farmSize: "25 acres",
+    experience: "15 years",
     rating: 4.8,
     reviews: 124,
-    image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
-    category: "vegetables",
-    description: "Fresh organic tomatoes grown without pesticides",
-    stock: 50,
-    unit: "kg",
-    deliveryTime: "2-3 days",
+    image: "/farmer.jpg",
+    category: "organic",
+    description: "Experienced organic farmer specializing in sustainable agriculture practices",
     verified: true
   },
   {
     id: 2,
-    name: "Premium Basmati Rice",
-    farmer: "Priya Sharma",
+    name: "Priya Sharma",
+    mainCrop: "Premium Basmati Rice",
+    farmName: "Sharma Family Farm",
     location: "Haryana, India",
-    price: 120,
-    originalPrice: 150,
+    farmSize: "18 acres",
+    experience: "12 years",
     rating: 4.9,
     reviews: 89,
-    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
+    image: "/farwer2.jpg",
     category: "grains",
-    description: "Premium quality basmati rice, aged for perfect taste",
-    stock: 25,
-    unit: "kg",
-    deliveryTime: "1-2 days",
+    description: "Premium quality grain producer with traditional farming methods",
     verified: true
   },
   {
     id: 3,
-    name: "Fresh Green Spinach",
-    farmer: "Amit Singh",
+    name: "Amit Singh",
+    mainCrop: "Fresh Spinach",
+    farmName: "Singh Vegetable Farm",
     location: "Uttar Pradesh, India",
-    price: 30,
-    originalPrice: 40,
+    farmSize: "12 acres",
+    experience: "8 years",
     rating: 4.6,
     reviews: 67,
-    image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400",
+    image: "/farmer1.png",
     category: "vegetables",
-    description: "Fresh green spinach packed with nutrients",
-    stock: 30,
-    unit: "bunch",
-    deliveryTime: "1 day",
+    description: "Fresh vegetable producer focusing on leafy greens and seasonal crops",
     verified: true
   },
   {
     id: 4,
-    name: "Organic Mangoes",
-    farmer: "Sunita Devi",
+    name: "Sunita Devi",
+    mainCrop: "Sweet Mangoes",
+    farmName: "Devi Mango Orchard",
     location: "Bihar, India",
-    price: 80,
-    originalPrice: 100,
+    farmSize: "30 acres",
+    experience: "20 years",
     rating: 4.7,
     reviews: 156,
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg",
+    image: "/farwer.jpg",
     category: "fruits",
-    description: "Sweet and juicy organic mangoes",
-    stock: 40,
-    unit: "dozen",
-    deliveryTime: "2-3 days",
+    description: "Fruit orchard specialist with expertise in tropical fruits",
     verified: true
   },
   {
     id: 5,
-    name: "Fresh Corn",
-    farmer: "Vikram Patel",
+    name: "Vikram Patel",
+    mainCrop: "Golden Corn",
+    farmName: "Patel Corn Fields",
     location: "Gujarat, India",
-    price: 25,
-    originalPrice: 35,
+    farmSize: "35 acres",
+    experience: "10 years",
     rating: 4.5,
     reviews: 43,
-    image: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400",
-    category: "vegetables",
-    description: "Fresh sweet corn harvested daily",
-    stock: 60,
-    unit: "piece",
-    deliveryTime: "1-2 days",
+    image: "/farmer2.jpg",
+    category: "grains",
+    description: "Large-scale grain producer specializing in corn and oilseeds",
     verified: true
   },
   {
     id: 6,
-    name: "Organic Wheat Flour",
-    farmer: "Ramesh Yadav",
+    name: "Ramesh Yadav",
+    mainCrop: "Organic Wheat",
+    farmName: "Yadav Wheat Farm",
     location: "Madhya Pradesh, India",
-    price: 55,
-    originalPrice: 70,
+    farmSize: "22 acres",
+    experience: "18 years",
     rating: 4.8,
     reviews: 98,
-    image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400",
+    image: "/farmer3.jpg",
     category: "grains",
-    description: "Stone-ground organic wheat flour",
-    stock: 35,
-    unit: "kg",
-    deliveryTime: "2-3 days",
+    description: "Traditional wheat farmer with organic certification",
     verified: true
   },
   {
     id: 7,
-    name: "Cavendish Bananas",
-    farmer: "Kiran Patil",
+    name: "Kiran Patil",
+    mainCrop: "Fresh Bananas",
+    farmName: "Patil Banana Plantation",
     location: "Maharashtra, India",
-    price: 50,
-    originalPrice: 60,
+    farmSize: "20 acres",
+    experience: "14 years",
     rating: 4.6,
     reviews: 142,
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Bananas.jpg",
+    image: "/farwer3.jpg",
     category: "fruits",
-    description: "Sweet ripe bananas harvested this week",
-    stock: 80,
-    unit: "dozen",
-    deliveryTime: "1-2 days",
+    description: "Tropical fruit specialist with modern irrigation systems",
     verified: true
   },
   {
     id: 8,
-    name: "Kashmir Apples",
-    farmer: "Imran Khan",
+    name: "Imran Khan",
+    mainCrop: "Premium Apples",
+    farmName: "Khan Apple Orchard",
     location: "Jammu & Kashmir, India",
-    price: 120,
-    originalPrice: 140,
+    farmSize: "15 acres",
+    experience: "16 years",
     rating: 4.7,
     reviews: 201,
-    image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80",
+    image: "/farmer4.jpg",
     category: "fruits",
-    description: "Crisp and juicy hand-picked apples",
-    stock: 45,
-    unit: "kg",
-    deliveryTime: "2-3 days",
-    verified: true
-  },
-  {
-    id: 9,
-    name: "Navel Oranges",
-    farmer: "Suman Verma",
-    location: "Madhya Pradesh, India",
-    price: 90,
-    originalPrice: 110,
-    rating: 4.5,
-    reviews: 87,
-    image: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400",
-    category: "fruits",
-    description: "Vitamin C rich, naturally sweet oranges",
-    stock: 60,
-    unit: "kg",
-    deliveryTime: "2 days",
-    verified: true
-  },
-  {
-    id: 10,
-    name: "Red Grapes",
-    farmer: "Harpreet Singh",
-    location: "Punjab, India",
-    price: 140,
-    originalPrice: 160,
-    rating: 4.6,
-    reviews: 73,
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/36/Red_Grapes.jpg",
-    category: "fruits",
-    description: "Seedless table grapes, naturally sweet",
-    stock: 30,
-    unit: "kg",
-    deliveryTime: "1-2 days",
-    verified: true
-  },
-  {
-    id: 11,
-    name: "Brown Onions",
-    farmer: "Ravi Joshi",
-    location: "Maharashtra, India",
-    price: 35,
-    originalPrice: 45,
-    rating: 4.4,
-    reviews: 66,
-    image: "https://images.unsplash.com/photo-1508747703725-719777637510?w=400",
-    category: "vegetables",
-    description: "Firm bulbs with rich flavor",
-    stock: 100,
-    unit: "kg",
-    deliveryTime: "1-2 days",
-    verified: true
-  },
-  {
-    id: 12,
-    name: "New Potatoes",
-    farmer: "Neha Gupta",
-    location: "Uttar Pradesh, India",
-    price: 28,
-    originalPrice: 35,
-    rating: 4.5,
-    reviews: 58,
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/94/Potatoes.jpg",
-    category: "vegetables",
-    description: "Thin-skinned, perfect for roasting and curries",
-    stock: 120,
-    unit: "kg",
-    deliveryTime: "1-2 days",
-    verified: true
-  },
-  {
-    id: 13,
-    name: "Orange Carrots",
-    farmer: "Sita Ram",
-    location: "Rajasthan, India",
-    price: 40,
-    originalPrice: 50,
-    rating: 4.6,
-    reviews: 91,
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Carrots.JPG",
-    category: "vegetables",
-    description: "Crunchy, sweet carrots ideal for salads",
-    stock: 70,
-    unit: "kg",
-    deliveryTime: "1 day",
-    verified: true
-  },
-  {
-    id: 14,
-    name: "Cucumbers",
-    farmer: "Ashok Kumar",
-    location: "Haryana, India",
-    price: 32,
-    originalPrice: 40,
-    rating: 4.3,
-    reviews: 39,
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/96/Cucumbers.jpg",
-    category: "vegetables",
-    description: "Hydrating cucumbers, crisp and fresh",
-    stock: 90,
-    unit: "kg",
-    deliveryTime: "1 day",
-    verified: true
-  },
-  {
-    id: 15,
-    name: "Bell Peppers Mix",
-    farmer: "Pooja Rao",
-    location: "Karnataka, India",
-    price: 85,
-    originalPrice: 100,
-    rating: 4.7,
-    reviews: 52,
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/59/Capsicum_annuum_fruits_various_colors.jpg",
-    category: "vegetables",
-    description: "Red, yellow and green capsicum mix",
-    stock: 50,
-    unit: "kg",
-    deliveryTime: "1-2 days",
-    verified: true
-  },
-  {
-    id: 16,
-    name: "Basmati Rice (Aged)",
-    farmer: "Seema Chaudhary",
-    location: "Haryana, India",
-    price: 180,
-    originalPrice: 210,
-    rating: 4.9,
-    reviews: 133,
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Basmati_rice.jpg",
-    category: "grains",
-    description: "Aged basmati rice for perfect aroma",
-    stock: 60,
-    unit: "kg",
-    deliveryTime: "2-3 days",
-    verified: true
-  },
-  {
-    id: 17,
-    name: "Yellow Lentils (Moong Dal)",
-    farmer: "Tarun Patel",
-    location: "Gujarat, India",
-    price: 110,
-    originalPrice: 130,
-    rating: 4.6,
-    reviews: 77,
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Moong_dal.jpg",
-    category: "grains",
-    description: "Protein-rich, cleaned and ready to cook",
-    stock: 80,
-    unit: "kg",
-    deliveryTime: "2 days",
-    verified: true
-  },
-  {
-    id: 18,
-    name: "Turmeric Powder",
-    farmer: "Anita Iyer",
-    location: "Andhra Pradesh, India",
-    price: 95,
-    originalPrice: 120,
-    rating: 4.7,
-    reviews: 65,
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Turmeric_powder.jpg",
-    category: "spices",
-    description: "Sun-dried, stone-ground turmeric powder",
-    stock: 40,
-    unit: "kg",
-    deliveryTime: "2-3 days",
-    verified: true
-  },
-  {
-    id: 19,
-    name: "Coriander Seeds",
-    farmer: "Gopal Sharma",
-    location: "Rajasthan, India",
-    price: 80,
-    originalPrice: 95,
-    rating: 4.5,
-    reviews: 44,
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Coriander_Seeds.JPG",
-    category: "spices",
-    description: "Aromatic coriander seeds with strong flavor",
-    stock: 55,
-    unit: "kg",
-    deliveryTime: "2-3 days",
+    description: "High-altitude fruit grower specializing in temperate fruits",
     verified: true
   }
 ]
 
 // Limit catalogue to the original set with verified images (first 8 items)
-const baseProducts = mockProducts.filter((p) => p.id <= 8)
+const baseFarmers = mockFarmers.filter((f) => f.id <= 8)
 
 const categories = [
-  { id: 'all', name: 'All Products', icon: faLeaf },
-  { id: 'vegetables', name: 'Vegetables', icon: faCarrot },
-  { id: 'fruits', name: 'Fruits', icon: faAppleAlt },
-  { id: 'grains', name: 'Grains', icon: faWheatAwn },
-  { id: 'spices', name: 'Spices', icon: faPepperHot }
+  { id: 'all', name: 'All Farmers', icon: faLeaf },
+  { id: 'vegetables', name: 'Vegetable Farmers', icon: faCarrot },
+  { id: 'fruits', name: 'Fruit Farmers', icon: faAppleAlt },
+  { id: 'grains', name: 'Grain Farmers', icon: faWheatAwn },
+  { id: 'organic', name: 'Organic Farmers', icon: faSeedling }
 ]
 
 const sortOptions = [
-  { value: 'price-low', label: 'Price: Low to High' },
-  { value: 'price-high', label: 'Price: High to Low' },
   { value: 'rating', label: 'Highest Rated' },
-  { value: 'newest', label: 'Newest First' },
+  { value: 'experience', label: 'Most Experienced' },
   { value: 'popular', label: 'Most Popular' }
 ]
 
 export const MarketplacePage = () => {
-  const [products, setProducts] = useState(baseProducts)
-  const [filteredProducts, setFilteredProducts] = useState(baseProducts)
+  const [farmers, setFarmers] = useState(baseFarmers)
+  const [filteredFarmers, setFilteredFarmers] = useState(baseFarmers)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [sortBy, setSortBy] = useState('popular')
   const [showFilters, setShowFilters] = useState(false)
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 200 })
   const [wishlist, setWishlist] = useState(new Set())
   const { addItem } = useCartStore()
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'list'
   const [showQuickView, setShowQuickView] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [selectedFarmer, setSelectedFarmer] = useState(null)
+  const [showBidForm, setShowBidForm] = useState(false)
+  const [selectedFarmerForBid, setSelectedFarmerForBid] = useState(null)
 
-  const openQuickView = (product) => {
-    setSelectedProduct(product)
+  const openQuickView = (farmer) => {
+    setSelectedFarmer(farmer)
     setShowQuickView(true)
   }
 
   const closeQuickView = () => {
     setShowQuickView(false)
-    setSelectedProduct(null)
+    setSelectedFarmer(null)
+  }
+
+  const openBidForm = (farmer) => {
+    setSelectedFarmerForBid(farmer)
+    setShowBidForm(true)
+  }
+
+  const closeBidForm = () => {
+    setShowBidForm(false)
+    setSelectedFarmerForBid(null)
+  }
+
+  const handleBidPlaced = (newBid) => {
+    // Update bid store if needed
+    console.log('New bid placed:', newBid)
+    // You can add additional logic here like updating UI state
   }
 
   const handleClearFilters = () => {
     setSearchTerm('')
     setSelectedCategory('all')
     setSortBy('popular')
-    setPriceRange({ min: 0, max: 200 })
   }
 
   // Filter and search functionality
   useEffect(() => {
     // Always work on a copy to avoid mutating state during sort
-    let filtered = [...products]
+    let filtered = [...farmers]
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.farmer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(farmer =>
+        farmer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        farmer.farmName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        farmer.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        farmer.specialties.some(specialty => 
+          specialty.toLowerCase().includes(searchTerm.toLowerCase())
+        )
       )
     }
 
     // Filter by category
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category === selectedCategory)
+      filtered = filtered.filter(farmer => farmer.category === selectedCategory)
     }
 
-    // Filter by price range
-    filtered = filtered.filter(product => 
-      product.price >= priceRange.min && product.price <= priceRange.max
-    )
-
-    // Sort products
+    // Sort farmers
     switch (sortBy) {
-      case 'price-low':
-        filtered.sort((a, b) => a.price - b.price)
-        break
-      case 'price-high':
-        filtered.sort((a, b) => b.price - a.price)
-        break
       case 'rating':
         filtered.sort((a, b) => b.rating - a.rating)
         break
-      case 'newest':
-        filtered.sort((a, b) => b.id - a.id)
+      case 'experience':
+        filtered.sort((a, b) => parseInt(b.experience) - parseInt(a.experience))
         break
       case 'popular':
         filtered.sort((a, b) => b.reviews - a.reviews)
@@ -447,15 +252,15 @@ export const MarketplacePage = () => {
         break
     }
 
-    setFilteredProducts(filtered)
-  }, [searchTerm, selectedCategory, sortBy, priceRange, products])
+    setFilteredFarmers(filtered)
+  }, [searchTerm, selectedCategory, sortBy, farmers])
 
-  const toggleWishlist = (productId) => {
+  const toggleWishlist = (farmerId) => {
     const newWishlist = new Set(wishlist)
-    if (newWishlist.has(productId)) {
-      newWishlist.delete(productId)
+    if (newWishlist.has(farmerId)) {
+      newWishlist.delete(farmerId)
     } else {
-      newWishlist.add(productId)
+      newWishlist.add(farmerId)
     }
     setWishlist(newWishlist)
   }
@@ -481,8 +286,8 @@ export const MarketplacePage = () => {
         </div>
 
         <div className="hero-content">
-          <h1>Fresh Farm Marketplace</h1>
-          <p>Connect directly with farmers and get fresh, organic produce delivered to your doorstep</p>
+          <h1>Farmer - Consumer Marketplace</h1>
+          <p>Connect with verified farmers and place bids on their produce. Farmers choose the best offers for their crops.</p>
           
           {/* Search Bar */}
           <div className="search-container">
@@ -490,7 +295,7 @@ export const MarketplacePage = () => {
               <FontAwesomeIcon icon={faSearch} className="search-icon" />
               <input
                 type="text"
-                placeholder="Search for fresh produce..."
+                placeholder="Search for farmers or crops..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -528,20 +333,6 @@ export const MarketplacePage = () => {
             </div>
 
             <div className="filter-group">
-              <h3>Price Range</h3>
-              <div className="price-range">
-                <input
-                  type="range"
-                  min="0"
-                  max="200"
-                  value={priceRange.max}
-                  onChange={(e) => setPriceRange({...priceRange, max: parseInt(e.target.value)})}
-                />
-                <span>₹0 - ₹{priceRange.max}</span>
-              </div>
-            </div>
-
-            <div className="filter-group">
               <h3>Sort By</h3>
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                 {sortOptions.map(option => (
@@ -574,7 +365,7 @@ export const MarketplacePage = () => {
       {/* Products Section */}
       <section className="products-section">
         <div className="products-header">
-          <h2>Fresh Produce ({filteredProducts.length} items)</h2>
+          <h2>Verified Farmers ({filteredFarmers.length} farmers)</h2>
           <div className="header-actions">
             <div className="view-toggle">
               <button
@@ -606,21 +397,16 @@ export const MarketplacePage = () => {
         </div>
 
         <div className={`products-grid ${viewMode === 'list' ? 'list' : ''}`}>
-          {filteredProducts.map(product => (
-            <div key={product.id} className="product-card">
+          {filteredFarmers.map(farmer => (
+            <div key={farmer.id} className="product-card">
               <div className="product-image">
-                <img src={product.image} alt={product.name} />
+                <img src={farmer.image} alt={farmer.name} />
                 <div className="product-badges">
-                  {product.verified && <span className="verified-badge">Verified</span>}
-                  {product.price < product.originalPrice && (
-                    <span className="discount-badge">
-                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
-                    </span>
-                  )}
+                  {farmer.verified && <span className="verified-badge">Verified</span>}
                 </div>
                 <button 
-                  className={`wishlist-btn ${wishlist.has(product.id) ? 'active' : ''}`}
-                  onClick={() => toggleWishlist(product.id)}
+                  className={`wishlist-btn ${wishlist.has(farmer.id) ? 'active' : ''}`}
+                  onClick={() => toggleWishlist(farmer.id)}
                 >
                   <FontAwesomeIcon icon={faHeart} />
                 </button>
@@ -628,87 +414,90 @@ export const MarketplacePage = () => {
 
               <div className="product-info">
                 <div className="product-header">
-                  <h3>{product.name}</h3>
+                  <h3>{farmer.name}</h3>
                   <div className="product-rating">
                     <FontAwesomeIcon icon={faStar} />
-                    <span>{product.rating}</span>
-                    <span className="reviews">({product.reviews})</span>
+                    <span>{farmer.rating}</span>
+                    <span className="reviews">({farmer.reviews})</span>
                   </div>
                 </div>
 
                 <div className="farmer-info">
                   <FontAwesomeIcon icon={faSeedling} />
-                  <span>{product.farmer}</span>
+                  <span>{farmer.farmName}</span>
                   <FontAwesomeIcon icon={faMapMarkerAlt} />
-                  <span>{product.location}</span>
+                  <span>{farmer.location}</span>
                 </div>
 
-                <p className="product-description">{product.description}</p>
+                <p className="product-description">{farmer.description}</p>
 
                 <div className="product-details">
-                  <div className="stock-info">
-                    <span>Stock: {product.stock} {product.unit}</span>
-                  </div>
-                  <div className="delivery-info">
-                    <FontAwesomeIcon icon={faTruck} />
-                    <span>{product.deliveryTime}</span>
+                  <div className="farm-info">
+                    <span>Farm Size: {farmer.farmSize}</span>
+                    <span>Experience: {farmer.experience}</span>
                   </div>
                 </div>
 
                 <div className="product-footer">
-                  <div className="price-info">
-                    <span className="current-price">₹{product.price}</span>
-                    {product.price < product.originalPrice && (
-                      <span className="original-price">₹{product.originalPrice}</span>
-                    )}
-                    <span className="unit">/{product.unit}</span>
-                  </div>
-                  <div className="product-actions">
-                    <button
-                      className="view-btn"
-                      onClick={() => openQuickView(product)}
-                      title="View details"
-                      aria-label={`View details for ${product.name}`}
-                    >
-                      <FontAwesomeIcon icon={faEye} />
-                    </button>
-                    <button className="add-to-cart-btn" onClick={() => addItem(product, 1)}>
-                      <FontAwesomeIcon icon={faShoppingCart} />
-                      Add to Cart
-                    </button>
-                  </div>
+                  <button className="crop-button" onClick={() => openQuickView(farmer)}>
+                    {farmer.mainCrop}
+                  </button>
+                  <button className="crop-details-btn" onClick={() => openQuickView(farmer)}>
+                    <FontAwesomeIcon icon={faWheatAwn} />
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
+        {filteredFarmers.length === 0 && (
           <div className="no-products">
             <FontAwesomeIcon icon={faLeaf} />
-            <h3>No products found</h3>
-            <p>Try adjusting your search or filters to find what you're looking for.</p>
+            <h3>No farmers found</h3>
+            <p>Try adjusting your search or filters to find farmers you're looking for.</p>
           </div>
         )}
       </section>
 
-      {showQuickView && selectedProduct && (
+      {showQuickView && selectedFarmer && (
         <div className="quick-view-overlay" onClick={closeQuickView}>
           <div className="quick-view-modal" onClick={(e) => e.stopPropagation()}>
             <div className="qv-media">
-              <img src={selectedProduct.image} alt={selectedProduct.name} loading="eager" />
+              <img src={selectedFarmer.image} alt={selectedFarmer.name} loading="eager" />
             </div>
             <div className="qv-info">
-              <h3>{selectedProduct.name}</h3>
-              <p className="qv-desc">{selectedProduct.description}</p>
-              <div className="qv-meta">
-                <span className="qv-price">₹{selectedProduct.price}</span>
-                <span className="qv-unit">/ {selectedProduct.unit}</span>
+              <h3>{selectedFarmer.name}</h3>
+              <div className="qv-crop-info">
+                <h4>Main Crop: <span className="crop-name">{selectedFarmer.mainCrop}</span></h4>
+                <div className="qv-farmer-details">
+                  <div className="qv-detail-item">
+                    <FontAwesomeIcon icon={faSeedling} />
+                    <span><strong>Farm:</strong> {selectedFarmer.farmName}</span>
+                  </div>
+                  <div className="qv-detail-item">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    <span><strong>Location:</strong> {selectedFarmer.location}</span>
+                  </div>
+                  <div className="qv-detail-item">
+                    <FontAwesomeIcon icon={faStar} />
+                    <span><strong>Rating:</strong> {selectedFarmer.rating} ({selectedFarmer.reviews} reviews)</span>
+                  </div>
+                  <div className="qv-detail-item">
+                    <FontAwesomeIcon icon={faWheatAwn} />
+                    <span><strong>Farm Size:</strong> {selectedFarmer.farmSize}</span>
+                  </div>
+                  <div className="qv-detail-item">
+                    <FontAwesomeIcon icon={faLeaf} />
+                    <span><strong>Experience:</strong> {selectedFarmer.experience}</span>
+                  </div>
+                </div>
+                <p className="qv-desc">{selectedFarmer.description}</p>
               </div>
               <div className="qv-actions">
-                <button className="add-to-cart-btn" onClick={() => addItem(selectedProduct, 1)}>
+                <button className="add-to-cart-btn" onClick={() => openBidForm(selectedFarmer)}>
                   <FontAwesomeIcon icon={faShoppingCart} />
-                  Add to Cart
+                  Place Bid
                 </button>
                 <button className="qv-close" onClick={closeQuickView}>Close</button>
               </div>
@@ -716,6 +505,13 @@ export const MarketplacePage = () => {
           </div>
         </div>
       )}
+
+      <BidForm 
+        farmer={selectedFarmerForBid}
+        isOpen={showBidForm}
+        onClose={closeBidForm}
+        onBidPlaced={handleBidPlaced}
+      />
 
       <Footer />
     </div>
