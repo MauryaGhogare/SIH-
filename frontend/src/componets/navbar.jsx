@@ -4,6 +4,7 @@ import { faLeaf, faUserCircle, faTachometerAlt, faChevronDown } from "@fortaweso
 import { Link } from 'react-router-dom';
 import { useLanguage } from "../stores/useLanguage";
 import { useBidStore } from "../stores/useBidStore";
+import NotificationSystem from "../components/community/NotificationSystem";
 
 const translations = {
   Eng: {
@@ -12,6 +13,7 @@ const translations = {
       home: "Home",
       marketplace: "Marketplace",
       community: "Community",
+      loans: "Loans",
       weatherIrrigation: "Weather & Irrigation",
       pestDiseaseScan: "Pest & Disease Scan",
       governmentSchemes: "Government Schemes"
@@ -23,9 +25,22 @@ const translations = {
       home: "मुख्यपृष्ठ",
       marketplace: "बाजारपेठ",
       community: "समुदाय",
+      loans: "कर्ज",
       weatherIrrigation: "हवामान आणि सिंचन",
       pestDiseaseScan: "किडा आणि रोग स्कॅन",
       governmentSchemes: "सरकारी योजना"
+    }
+  },
+  Hin: {
+    appName: "३६०° कृषि",
+    navLinks: {
+      home: "होम",
+      marketplace: "मार्केटप्लेस",
+      community: "समुदाय",
+      loans: "ऋण",
+      weatherIrrigation: "मौसम और सिंचाई",
+      pestDiseaseScan: "कीट और रोग स्कैन",
+      governmentSchemes: "सरकारी योजनाएं"
     }
   }
 };
@@ -67,6 +82,11 @@ export const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link to="/loans" className="Loans">
+              {t.navLinks.loans}
+            </Link>
+          </li>
+          <li>
             <Link to="/weather" className="Weather-Irrigation">
               {t.navLinks.weatherIrrigation}
             </Link>
@@ -88,8 +108,10 @@ export const Navbar = () => {
           <select value={language} onChange={handleLanguageChange}>
             <option value="Eng">English</option>
             <option value="Mar">मराठी</option>
+            <option value="Hin">हिन्दी</option>
           </select>
         </div>
+        <NotificationSystem />
         <Link to={"/dashboard"} className="dashboard-link" style={{ position: 'relative' }}>
           <FontAwesomeIcon icon={faTachometerAlt} />
           <span className="bid-count">{shortlisted.length}</span>

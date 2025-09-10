@@ -1,0 +1,210 @@
+{
+  "posts": [
+    {
+      "id": "p1",
+      "authorId": "u1",
+      "title": "When to sow rabi wheat?",
+      "body": "Is late October okay for sowing rabi wheat in Punjab? I'm planning to plant on my 5-acre field. Any specific variety recommendations?",
+      "category": "Planting",
+      "tags": ["wheat", "rabi", "sowing"],
+      "location": {
+        "state": "Punjab",
+        "district": "Ludhiana"
+      },
+      "upvotes": 6,
+      "answersCount": 3,
+      "isAnswered": true,
+      "acceptedAnswerId": "a2",
+      "createdAt": "2025-09-01T08:00:00Z",
+      "updatedAt": "2025-09-01T08:00:00Z",
+      "imageUrl": null,
+      "reports": 0
+    },
+    {
+      "id": "p2",
+      "authorId": "u2",
+      "title": "Pest: brown spots on mango leaves",
+      "body": "I'm seeing brown spots on my mango tree leaves. The spots are spreading quickly. Photos attached. What could be causing this and how to treat it?",
+      "category": "Pests",
+      "tags": ["mango", "pests", "disease"],
+      "location": {
+        "state": "Maharashtra",
+        "district": "Ratnagiri"
+      },
+      "upvotes": 3,
+      "answersCount": 1,
+      "isAnswered": false,
+      "acceptedAnswerId": null,
+      "createdAt": "2025-09-07T12:00:00Z",
+      "updatedAt": "2025-09-07T12:00:00Z",
+      "imageUrl": "/images/mango-pest.jpg",
+      "reports": 0
+    },
+    {
+      "id": "p3",
+      "authorId": "u1",
+      "title": "Best irrigation method for tomato farming",
+      "body": "What's the most efficient irrigation method for tomato farming in dry regions? I'm considering drip irrigation but want to know about costs and benefits.",
+      "category": "Irrigation",
+      "tags": ["tomato", "irrigation", "drip"],
+      "location": {
+        "state": "Rajasthan",
+        "district": "Jodhpur"
+      },
+      "upvotes": 8,
+      "answersCount": 2,
+      "isAnswered": false,
+      "acceptedAnswerId": null,
+      "createdAt": "2025-09-05T15:30:00Z",
+      "updatedAt": "2025-09-05T15:30:00Z",
+      "imageUrl": null,
+      "reports": 0
+    }
+  ],
+  "users": [
+    {
+      "id": "u1",
+      "name": "Ramesh Kumar",
+      "username": "ramesh_farmer",
+      "verified": true,
+      "role": "farmer",
+      "location": "Punjab",
+      "joinDate": "2024-01-15T00:00:00Z",
+      "avatar": "/images/farmer1.jpg",
+      "bio": "Experienced wheat farmer with 15 years of experience",
+      "reputation": 245
+    },
+    {
+      "id": "u2",
+      "name": "Sita Devi",
+      "username": "sita_gardener",
+      "verified": false,
+      "role": "farmer",
+      "location": "Maharashtra",
+      "joinDate": "2024-03-20T00:00:00Z",
+      "avatar": "/images/farmer2.jpg",
+      "bio": "Mango orchard owner and horticulture enthusiast",
+      "reputation": 89
+    },
+    {
+      "id": "u3",
+      "name": "Dr. Rajesh Agrawal",
+      "username": "dr_agrawal",
+      "verified": true,
+      "role": "expert",
+      "location": "Delhi",
+      "joinDate": "2023-11-10T00:00:00Z",
+      "avatar": "/images/expert1.jpg",
+      "bio": "Agricultural scientist specializing in crop diseases",
+      "reputation": 567
+    }
+  ],
+  "comments": [
+    {
+      "id": "a1",
+      "postId": "p1",
+      "authorId": "u3",
+      "body": "Late October is perfect for rabi wheat in Punjab. I recommend HD-2967 variety for your region.",
+      "upvotes": 4,
+      "createdAt": "2025-09-01T10:30:00Z",
+      "isAccepted": false,
+      "replies": [
+        {
+          "id": "r1",
+          "authorId": "u1",
+          "body": "Thanks! Where can I get HD-2967 seeds?",
+          "createdAt": "2025-09-01T11:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "postId": "p1",
+      "authorId": "u2",
+      "body": "I've been using HD-2967 for 3 years. Great yield and disease resistance. Best sown between Oct 25-Nov 5.",
+      "upvotes": 6,
+      "createdAt": "2025-09-01T12:15:00Z",
+      "isAccepted": true,
+      "replies": []
+    },
+    {
+      "id": "a3",
+      "postId": "p2",
+      "authorId": "u3",
+      "body": "This looks like anthracnose disease. Apply copper-based fungicide and improve air circulation around the tree.",
+      "upvotes": 2,
+      "createdAt": "2025-09-07T14:20:00Z",
+      "isAccepted": false,
+      "replies": []
+    },
+    {
+      "id": "a4",
+      "postId": "p3",
+      "authorId": "u2",
+      "body": "Drip irrigation is excellent for tomatoes. Initial cost is high but water savings are significant.",
+      "upvotes": 3,
+      "createdAt": "2025-09-05T16:45:00Z",
+      "isAccepted": false,
+      "replies": []
+    }
+  ],
+  "chats": [
+    {
+      "id": "c1",
+      "participants": ["u1", "u3"],
+      "lastMessage": "Thanks for the wheat advice!",
+      "lastMessageAt": "2025-09-01T13:00:00Z",
+      "unreadCount": 0
+    },
+    {
+      "id": "c2",
+      "participants": ["u2", "u3"],
+      "lastMessage": "Can you help with mango disease treatment?",
+      "lastMessageAt": "2025-09-07T15:30:00Z",
+      "unreadCount": 1
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "chatId": "c1",
+      "senderId": "u1",
+      "content": "Hi Dr. Agrawal, thanks for the wheat variety recommendation!",
+      "createdAt": "2025-09-01T12:45:00Z"
+    },
+    {
+      "id": "m2",
+      "chatId": "c1",
+      "senderId": "u3",
+      "content": "You're welcome! Feel free to ask if you need more advice.",
+      "createdAt": "2025-09-01T13:00:00Z"
+    },
+    {
+      "id": "m3",
+      "chatId": "c2",
+      "senderId": "u2",
+      "content": "Can you help with mango disease treatment?",
+      "createdAt": "2025-09-07T15:30:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n1",
+      "userId": "u1",
+      "type": "comment",
+      "title": "New comment on your post",
+      "body": "Dr. Rajesh Agrawal commented on your wheat post",
+      "read": false,
+      "createdAt": "2025-09-01T10:30:00Z"
+    },
+    {
+      "id": "n2",
+      "userId": "u2",
+      "type": "message",
+      "title": "New message",
+      "body": "Dr. Rajesh Agrawal sent you a message",
+      "read": false,
+      "createdAt": "2025-09-07T15:30:00Z"
+    }
+  ]
+}

@@ -9,7 +9,8 @@ import { connectDb } from "./lib/db.js";
 import authRoutes from "./routes/auth.Route.js";
 import chatRoutes from "./routes/chat.route.js";
 // import reviewRoutes from "./routes/review.route.js";
-import sensorRoutes from "./routes/sensor.Route.js"
+import sensorRoutes from "./routes/sensor.Route.js";
+import loansRoutes from "./routes/loans.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -41,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/chats", chatRoutes);
 // app.use("/api/review", reviewRoutes);
 app.use("/api/sensor", sensorRoutes);
+app.use("/api/loans", loansRoutes);
 
 // Socket.IO Connection
 io.on("connection", (socket) => {

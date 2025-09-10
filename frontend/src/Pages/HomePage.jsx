@@ -566,6 +566,11 @@ const Homepage = ({ authUser }) => {
                     feature.title === "शेतकरी ते ग्राहक बाजारपेठ"
                   ) {
                     navigate("/marketplace");
+                  } else if (
+                    feature.title === "Community & Farmer Network" ||
+                    feature.title === "समुदाय आणि शेतकरी नेटवर्क"
+                  ) {
+                    navigate("/community");
                   }
                 }}
               >

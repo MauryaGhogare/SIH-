@@ -96,6 +96,11 @@ body {
   transition: var(--transition);
   color: var(--primary-color);
 }
+
+.Community{
+  transition: var(--transition);
+  color: var(--primary-color);
+}
 .nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;

@@ -1,4 +1,6 @@
 import "./App.css";
+import "./Styles/Community.css";
+import "./Styles/Homepage.css";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,6 +19,11 @@ import { MarketplacePage } from "./Pages/MarketplacePage.jsx";
 import { CommunityPage } from "./Pages/CommunityPage.jsx";
 import CartPage from "./Pages/CartPage.jsx";
 import { DashboardPage } from "./Pages/DashboardPage.jsx";
+import LoansPage from "./Pages/LoansPage.jsx";
+import CommunityHome from "./Pages/CommunityHome.jsx";
+import PostDetail from "./Pages/PostDetail.jsx";
+import ChatList from "./Pages/ChatList.jsx";
+import ChatWindow from "./Pages/ChatWindow.jsx";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore();
@@ -56,11 +63,12 @@ function App() {
 
         <Route path="/marketplace" element={<MarketplacePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/loans" element={<LoansPage />} />
+        <Route path="/community" element={<CommunityHome />} />
+        <Route path="/community/post/:id" element={<PostDetail />} />
+        <Route path="/community/chat" element={<ChatList />} />
+        <Route path="/community/chat/:id" element={<ChatWindow />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route
-          path="/community"
-          element={authUser ? <CommunityPage /> : <Navigate to="/login" />}
-        />
         {/* removed duplicate marketplace route */}
 
         <Route path="/update" element={<ProfilePage />} />
